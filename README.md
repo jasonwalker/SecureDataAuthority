@@ -13,7 +13,7 @@ An encrypted email-like system for small groups to communicate securely.
  * required Java 1.7 or higher.
  * Start server--stand-alone method
 
-    Download [SDAServer-1.0.0-SNAPSHOT-jetty-console.war](http://github.com/jasonwalker/SecureDataAuthority/releases/SDAServer-1.0.0-SNAPSHOT-jetty-console.war) and run:
+    Download [SDAServer-1.0.0-SNAPSHOT-jetty-console.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.0/SDAServer-0.1.0-jetty-console.war) and run:
     ```sh
     java -jar SDAServer-1.0.0-SNAPSHOT-jetty-console.war
     ```
@@ -22,7 +22,7 @@ An encrypted email-like system for small groups to communicate securely.
   
  * Start server--servlet engine method
 
-    Download [SDAServer-1.0.0-SNAPSHOT.war](http://github.com/jasonwalker/SecureDataAuthority/releases/SDAServer-1.0.0-SNAPSHOT-jetty-console.war) and place it in the servlet engine's WAR directory.
+    Download [SDAServer-1.0.0-SNAPSHOT.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.0/SDAServer-0.1.0.war) and place it in the servlet engine's WAR directory.
 
  	
  	_NOTE: The RSA strength defaults to 3072 bits.  If you would like to change that, create a file in the servlet root directory
