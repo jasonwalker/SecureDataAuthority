@@ -16,8 +16,8 @@ public class VersionString {
 			version = "not found";
 		}
 		String info =
-				"Version" + //0
-				version +     //1
+				"Version\n" + //0
+				version.trim() +     //1
 				"\nRSA Strength\n" + //2 
 		        privateKey.bitLength() + //3 
 		        "\nAES Strength\n" + //4
