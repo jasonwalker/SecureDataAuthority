@@ -13,16 +13,16 @@ An encrypted email-like system for small groups to communicate securely.
  * required Java 1.7 or higher.
  * Start server--stand-alone method
 
-    Download [SDAServer-0.1.0-jetty-console.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.0/SDAServer-0.1.0-jetty-console.war) and run:
+    Download [SDAServer-0.1.1-jetty-console.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.1/SDAServer-0.1.1-jetty-console.war) and run:
     ```sh
-    java -jar SDAServer-0.1.0-jetty-console.war
+    java -jar SDAServer-0.1.1-jetty-console.war
     ```
     On the window that pops up, choose a desired port number and click the "Start" button.  
     Wait while the RSA Key pairs are being generated for first run.
   
  * Start server--servlet engine method
 
-    Download [SDAServer-0.1.0.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.0/SDAServer-0.1.0.war) and place it in the servlet engine's WAR directory.
+    Download [SDAServer-0.1.1.war](https://github.com/jasonwalker/SecureDataAuthority/releases/download/0.1.1/SDAServer-0.1.1.war) and place it in the servlet engine's WAR directory.
 
  	
  	_NOTE: The RSA strength defaults to 3072 bits.  If you would like to change that, create a file in the servlet root directory
@@ -127,8 +127,8 @@ risk is mitigated in that you, or someone you trust, should be the one running t
 ```
   Server executable output goes to the directory SDAServer/target.  Two files are created:
   
-     1.  SDAServer-0.1.0-jetty-console.war for running WAR file directly (see Quickstart)
-     2.  SDAServer-0.1.0.war for running in a servlet engine
+     1.  SDAServer-0.1.1-jetty-console.war for running WAR file directly (see Quickstart)
+     2.  SDAServer-0.1.1.war for running in a servlet engine
   
   * To perform test run change to directory "SDAServer" and type:
 ```sh
