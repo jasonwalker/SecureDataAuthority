@@ -78,7 +78,7 @@ back and forth)
  * Separate RSA key pairs for encryption and signing
  * Central server publishes client-generated public keys
 
-## Why did you chose 3072 RSA and 256 AES for default encryption strength?
+## Why did you choose 3072 RSA and 256 AES for default encryption strength?
 
 256-bit AES was chosen because it is very strong and the time to generate the AES key is inconsequential.  The
 weaker point is the RSA key.  3072-bit RSA is an equivalent strength to 128-bit AES.  The most time-consuming part is of 
