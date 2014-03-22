@@ -38,7 +38,8 @@ public class ForwardMailController {
 	SendMailPanel view;
 	JFrame currentFrame;
 	protected static final AbstractCrypto crypto = AbstractCrypto.getCrypto();
-	public ForwardMailController(SendMailPanel view, MailToForward model, EncryptedListItem item){
+	// reply is a specific type of forwarding
+	public ForwardMailController(SendMailPanel view, MailToForward model, EncryptedListItem item, boolean reply){
 		this.view = view;
 		this.model = model;
 		for (AttachmentInfo info : item.getAttachments()){
@@ -48,10 +49,17 @@ public class ForwardMailController {
 		this.view.setNote(item.getNote());
 		this.view.setSubject(item.getSubject());
 		this.view.addSendListener(new ForwardMailListener());
-		this.currentFrame = ViewUtils.createNewWindow(view , "Forward Mail");
+		String title = reply ? "Reply To Mail" : "Forward Mail";
+		this.currentFrame = ViewUtils.createNewWindow(view , title);
 		this.view.addAttachListener(new AttachListener());
 		this.view.addDeleteAttachmentListener(new DeleteAttachmentListener());
 		this.view.updateRecipientMailboxes(MailboxCache.getUsers());
+		if (reply){
+			this.view.addToDestinationMailbox(item.getFromBox());
+			for (String toBox : item.getToBoxes()){
+				this.view.addToDestinationMailbox(toBox);
+			}
+		}
 	}
 	
 	class AttachListener implements ActionListener{

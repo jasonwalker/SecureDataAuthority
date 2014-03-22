@@ -20,12 +20,18 @@ import com.jmw.sda.transport.objects.EncryptedListItem;
 
 public class EncryptedListItemTest extends Tests {
 	protected static String fromBox;
+	protected static String[] toBoxes;
 	protected static String subject;
 	protected static String note;
+	private static final int NUMBER_TO = 5;
 	
 	@BeforeClass
 	public static void setup(){
 		fromBox = randomString(50);
+		toBoxes = new String[NUMBER_TO];
+		for (int i = 0 ; i < NUMBER_TO ; i++){
+			toBoxes[i] = randomString(50);
+		}
 		subject = randomString(80);
 		note = randomString(400);
 	}
@@ -39,7 +45,7 @@ public class EncryptedListItemTest extends Tests {
 			attachment.setServerId(Integer.valueOf(i).toString());
 			attachments.add(attachment);
 		}
-		EncryptedListItem originalEli = new EncryptedListItem(fromBox, subject, note,  attachments);
+		EncryptedListItem originalEli = new EncryptedListItem(fromBox, toBoxes, subject, note,  attachments);
 		byte[] encrypted = originalEli.encrypt(othersKeys.getPublicKey(), myKeys.getPrivateKey());
 		EncryptedListItem decryptedEli = EncryptedListItem.decrypt(othersKeys.getPrivateKey(), encrypted);
 		assertEquals("EncryptedListItem failed to decrypt properly", originalEli.toString(), decryptedEli.toString());
@@ -56,7 +62,7 @@ public class EncryptedListItemTest extends Tests {
 			attachment.setServerId(Integer.valueOf(i).toString());
 			attachments.add(attachment);
 		}
-		EncryptedListItem originalEli = new EncryptedListItem(fromBox, subject, note,  attachments);
+		EncryptedListItem originalEli = new EncryptedListItem(fromBox, toBoxes, subject, note,  attachments);
 		byte[] encrypted = originalEli.encrypt(othersKeys.getPublicKey(), myKeys.getPrivateKey());
 		try{
 			EncryptedListItem.decrypt(myKeys.getPrivateKey(), encrypted);
@@ -75,7 +81,7 @@ public class EncryptedListItemTest extends Tests {
 			attachment.setServerId(Integer.valueOf(i).toString());
 			attachments.add(attachment);
 		}
-		EncryptedListItem originalEli = new EncryptedListItem(fromBox, subject, note,  attachments);
+		EncryptedListItem originalEli = new EncryptedListItem(fromBox, toBoxes, subject, note,  attachments);
 		byte[] encrypted = originalEli.encrypt(othersKeys.getPublicKey(), myKeys.getPrivateKey());
 		EncryptedListItem decryptedEli = EncryptedListItem.decrypt(othersKeys.getPrivateKey(), encrypted);
 		assertEquals("EncryptedListItem failed to decrypt properly", originalEli.toString(), decryptedEli.toString());

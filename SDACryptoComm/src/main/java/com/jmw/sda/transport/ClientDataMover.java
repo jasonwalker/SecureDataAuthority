@@ -40,7 +40,7 @@ public class ClientDataMover {
 		String timestamp = Utils.getTimestamp();
 		ServerMailMetaData serverData = new ServerMailMetaData(privateKey, timestamp, toBoxes, fromBox);
 		MeasuredStream.writeOutput(serverData.getBytes(), unencryptedOutputStream);
-		EncryptedListItem mailListData = new EncryptedListItem(fromBox, subject, note, attachments);
+		EncryptedListItem mailListData = new EncryptedListItem(fromBox, toBoxes, subject, note, attachments);
 		for (IPublicKey publicKey : publicKeys){
 			MeasuredStream.writeMore(unencryptedOutputStream);
 			MeasuredStream.writeOutput(mailListData.encrypt(publicKey, privateKey), unencryptedOutputStream);

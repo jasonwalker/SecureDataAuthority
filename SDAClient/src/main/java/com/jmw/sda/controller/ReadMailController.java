@@ -43,6 +43,7 @@ public class ReadMailController {
 		this.view = view;
 		this.model = model;
 		this.view.addForwardListener(new GetForwardListener());
+		this.view.addReplyListener(new GetReplyListener());
 		this.view.addDownloadRequestListener(new DownloadListener());
 		this.webServiceClient = new WebServiceClient();
 		ViewUtils.createNewWindow(view , "View Mail");	
@@ -72,7 +73,20 @@ public class ReadMailController {
 		public void actionPerformed(ActionEvent event) {
 			try{
 		    	new ForwardMailController(new SendMailPanel(), new MailToForward(),
-		    			ReadMailController.this.model.getEncryptedListItem(null));
+		    			ReadMailController.this.model.getEncryptedListItem(null), false);
+			}catch(JavaInstallationMissingComponentsException | FailedCryptException e){
+					//should have failed already
+			}
+		}
+	}
+	
+	class GetReplyListener implements ActionListener{
+		@SuppressWarnings("unused")
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			try{
+		    	new ForwardMailController(new SendMailPanel(), new MailToForward(),
+		    			ReadMailController.this.model.getEncryptedListItem(null), true);
 			}catch(JavaInstallationMissingComponentsException | FailedCryptException e){
 					//should have failed already
 			}

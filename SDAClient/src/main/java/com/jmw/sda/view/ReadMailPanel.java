@@ -20,6 +20,7 @@ import com.jmw.sda.view.widgets.StringHolder;
 public class ReadMailPanel extends JPanel {
 	private static final long serialVersionUID = -9040490470282617418L;
 	protected JButton forwardButton;
+	protected JButton replyButton;
 	protected JTextField fromMailbox;
 	protected JTextField subjectField;
 	protected ScrollingTextArea noteArea;
@@ -27,13 +28,10 @@ public class ReadMailPanel extends JPanel {
 	protected StringHolder attachmentHolder;
 	protected File selectedDirectory;
 	
+	
 	public ReadMailPanel() {
 		setLayout(null);
 		this.addComponentListener(new ResizeListener());
-
-		this.forwardButton = new JButton("Forward Message");
-		this.forwardButton.setBounds(10, 11, 128, 56);
-		add(this.forwardButton);
 		this.infoArea = new ScrollingTextArea();
 		this.infoArea.setEnabled(false);
 		this.infoArea.setBounds(148, 11, 522, 56);
@@ -76,6 +74,14 @@ public class ReadMailPanel extends JPanel {
 		JLabel lblAttachmentsl = new JLabel("Attachments");
 		lblAttachmentsl.setBounds(10, 163, 101, 14);
 		add(lblAttachmentsl);
+		
+		this.forwardButton = new JButton("Fwd");
+		forwardButton.setBounds(83, 11, 62, 53);
+		add(forwardButton);
+		
+		replyButton = new JButton("Reply");
+		replyButton.setBounds(10, 11, 61, 53);
+		add(replyButton);
 
 	}
 	
@@ -120,6 +126,13 @@ public class ReadMailPanel extends JPanel {
     }
     public void removeForwardListener(ActionListener listener){
     	this.forwardButton.removeActionListener(listener);
+    }
+    
+    public void addReplyListener(ActionListener listener){
+    	this.replyButton.addActionListener(listener);
+    }
+    public void removeReplyListener(ActionListener listener){
+    	this.replyButton.removeActionListener(listener);
     }
 
 	public void setInfo(String info) {

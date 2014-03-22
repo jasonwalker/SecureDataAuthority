@@ -13,6 +13,7 @@ import com.jmw.sda.crypto.Utils;
 
 public class EncryptedListItem {
 	protected String fromBox;
+	protected String[] toBoxes;
 	protected String subject;
 	protected String note;
 	protected List<AttachmentInfo> attachments;
@@ -23,8 +24,9 @@ public class EncryptedListItem {
 	
 	protected EncryptedListItem(){
 	}
-	public EncryptedListItem(String fromBox, String subject, String note, List<AttachmentInfo> attachments){
+	public EncryptedListItem(String fromBox, String[] toBoxes, String subject, String note, List<AttachmentInfo> attachments){
 		this.fromBox = fromBox;
+		this.toBoxes = toBoxes;
 		this.subject = subject;
 		this.note = note;
 		this.attachments = attachments;
@@ -35,12 +37,13 @@ public class EncryptedListItem {
 		try{
 			EncryptedListItem mailListData = new EncryptedListItem();
 			byte[][] data = Utils.unpackBigArray(bytes);
-			mailListData.fromBox = new String(data[0],Utils.ENCODING); 
-			mailListData.subject =  new String(data[1],Utils.ENCODING);
-			mailListData.note = new String(data[2],Utils.ENCODING);
-			mailListData.attachments = unpackByteArrayIntoAttachmentInfo(data[3]);
-			mailListData.timestamp = new String(data[4],Utils.ENCODING);	
-			mailListData.signature = data[5];
+			mailListData.fromBox = new String(data[0],Utils.ENCODING);
+			mailListData.toBoxes = Utils.unpackIntoStringArray(data[1]);
+			mailListData.subject =  new String(data[2],Utils.ENCODING);
+			mailListData.note = new String(data[3],Utils.ENCODING);
+			mailListData.attachments = unpackByteArrayIntoAttachmentInfo(data[4]);
+			mailListData.timestamp = new String(data[5],Utils.ENCODING);	
+			mailListData.signature = data[6];
 			return mailListData;
 		}catch(UnsupportedEncodingException e){
 			throw new JavaInstallationMissingComponentsException(e);
@@ -86,8 +89,10 @@ public class EncryptedListItem {
 	
 	protected byte[] getSignedBytes(IPrivateKey privateKey) throws JavaInstallationMissingComponentsException, FailedCryptException{
 		try {
-			return Utils.packIntoBigArray(this.fromBox.getBytes(Utils.ENCODING), this.subject.getBytes(Utils.ENCODING), this.note.getBytes(Utils.ENCODING), 
-					packAttachmentInfoIntoByteArray(this.attachments), this.timestamp.getBytes(Utils.ENCODING), makeSignature(privateKey));
+			return Utils.packIntoBigArray(this.fromBox.getBytes(Utils.ENCODING), Utils.packStringsIntoBigArray(this.toBoxes), 
+					this.subject.getBytes(Utils.ENCODING), this.note.getBytes(Utils.ENCODING), 
+					packAttachmentInfoIntoByteArray(this.attachments), this.timestamp.getBytes(Utils.ENCODING), 
+					makeSignature(privateKey));
 		} catch (UnsupportedEncodingException e) {
 			throw new JavaInstallationMissingComponentsException(e);
 		}
@@ -99,7 +104,8 @@ public class EncryptedListItem {
 	
 	private byte[] getBytesToSign() throws JavaInstallationMissingComponentsException{
 		try {
-			return Utils.packIntoBigArray(this.fromBox.getBytes(Utils.ENCODING), this.subject.getBytes(Utils.ENCODING), this.note.getBytes(Utils.ENCODING), 
+			return Utils.packIntoBigArray(this.fromBox.getBytes(Utils.ENCODING), Utils.packStringsIntoBigArray(this.toBoxes),
+					this.subject.getBytes(Utils.ENCODING), this.note.getBytes(Utils.ENCODING), 
 					packAttachmentInfoIntoByteArray(this.attachments), this.timestamp.getBytes(Utils.ENCODING));
 		} catch (UnsupportedEncodingException e) {
 			throw new JavaInstallationMissingComponentsException(e);
@@ -116,6 +122,10 @@ public class EncryptedListItem {
 	public String getFromBox() {
 		return this.fromBox;
 	}
+	public String[] getToBoxes(){
+		return this.toBoxes;
+	}
+	
 	public String getSubject() {
 		return this.subject;
 	}
@@ -134,6 +144,10 @@ public class EncryptedListItem {
 		StringBuilder sb = new StringBuilder("MailListData--");
 		sb.append("FromBox: ");
 		sb.append(this.fromBox);
+		sb.append("toBoxes: ");
+		for (String toBox : toBoxes){
+			sb.append(toBox);
+		}
 		sb.append(", subject: ");
 		sb.append(this.subject);
 		sb.append(", note: ");

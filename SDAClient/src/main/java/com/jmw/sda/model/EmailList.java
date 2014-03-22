@@ -20,7 +20,7 @@ import com.jmw.sda.utils.Configuration;
 public class EmailList extends AbstractTableModel {
 	private static final long serialVersionUID = 1601348957105110840L;
 	protected TotalListItem[] items = null;
-	public static final String dateFormat = "MMM dd yy', 'hh:mm";
+	public static final String dateFormat = "YYY MM dd'-'hh:mm:ss";
 	protected static AbstractCrypto crypto = AbstractCrypto.getCrypto();
 	
 	public static String dateToString(Date date){
@@ -29,6 +29,10 @@ public class EmailList extends AbstractTableModel {
 	}
 	
 	public EmailList(){
+	}
+	
+	public static int getTimeColumn(){
+		return 2;
 	}
 	
 	@Override

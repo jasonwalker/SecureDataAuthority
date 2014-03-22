@@ -135,15 +135,23 @@ public class ListMailPanel extends JPanel {
 	class MailTable extends JTable{
 		private static final long serialVersionUID = 30889488340673109L;
 		protected EmailList emailModel;
+		public MailTable(){
+			this.setAutoCreateRowSorter(true);
+		}
 
 		public void setModel(EmailList model){
 			super.setModel(model);
 			this.emailModel = model;
+			//chooose time column for sorting
+			this.getRowSorter().toggleSortOrder(EmailList.getTimeColumn());
+			//change time column from ascending to descending
+			this.getRowSorter().toggleSortOrder(EmailList.getTimeColumn());
 		}
 		@Override
 	    public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
             Component comp = super.prepareRenderer(renderer, row, column);
 			try{
+				comp.setFont(Styling.UNREAD_EMAIL);
 				if(!this.emailModel.isRowSignatureValid(row)){
 					comp.setForeground(Styling.FAILED_SIGNATURE_LIST_FOREGROUND);
 					comp.setBackground(Styling.FAILED_SIGNATURE_LIST_BACKGROUND);

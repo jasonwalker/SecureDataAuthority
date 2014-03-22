@@ -97,23 +97,27 @@ public class SendMailPanel extends JPanel {
 		this.toLabelRefresh.removeActionListener(listener);
 	}
 	
+	public void addToDestinationMailbox(String toMailbox){
+        if (toMailbox.trim().equalsIgnoreCase("")){
+        	return;
+        }
+        String[] recipients = SendMailPanel.this.destinationMailbox.getStrings();
+        for (String recipient : recipients){
+        	if (recipient == null){
+        		continue;
+        	}
+        	if (recipient.equals(toMailbox)){
+        		return;
+        	}
+        }
+        this.destinationMailbox.addString(toMailbox);		
+	}
+	
 	class EmailAddListener implements ActionListener{
 	    @Override
 		public void actionPerformed(ActionEvent e) {
 	        String toMailbox = (String)SendMailPanel.this.emailBox.getSelectedItem();
-	        if (toMailbox.trim().equalsIgnoreCase("")){
-	        	return;
-	        }
-	        String[] recipients = SendMailPanel.this.destinationMailbox.getStrings();
-	        for (String recipient : recipients){
-	        	if (recipient == null){
-	        		continue;
-	        	}
-	        	if (recipient.equals(toMailbox)){
-	        		return;
-	        	}
-	        }
-	        SendMailPanel.this.destinationMailbox.addString(toMailbox);
+	        SendMailPanel.this.addToDestinationMailbox(toMailbox);
 	    }		
 	}
 	

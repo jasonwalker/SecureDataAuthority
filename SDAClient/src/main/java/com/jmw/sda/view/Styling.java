@@ -13,4 +13,6 @@ public class Styling {
 	
 	public static final Color EXCEPTION_SIGNATURE_LIST_BACKGROUND = Color.BLACK;
 	public static final Color EXCEPTION_SIGNATURE_LIST_FOREGROUND = Color.RED;
+	
+	public static final Font UNREAD_EMAIL = new Font("default", Font.BOLD, 12);
 }
